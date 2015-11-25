@@ -1,15 +1,4 @@
-"""Classic Sod's shock-tube test. (5 seconds)
-
-Two regions of a quiescient gas are separated by an imaginary
-diaphgram that is instantaneously ruptured at t = 0. The two states
-(left,right) are defined by the properties:
-
-     left                               right
-  
-     density = 1.0                      density = 0.125
-     pressure = 1.0                     pressure = 0.1
-
-The solution examined at the final time T = 0.15s
+"""Reaction Diffusion Equation(5 seconds)
 
 """
 
@@ -43,17 +32,19 @@ xmin = -0.5; xmax = 0.5
 n = 401
 dx = (xmax-xmin)/(n-1)
 
-# cfl
+# CFL value should be less then 0.5 for diffusion equation
 cfl = 0.1
+# Diffuion coefficient
 Do = 0.5
+# time step according to cfl condition
 dt = cfl*dx**2/Do
 
-# solution parameters
+# simulation time
 tf = 0.01
 
 
-print 'dx:', dx
-print 'dt:', dt
+print 'Step size:', dx
+print 'Time step:', dt
 
 # scheme constants
 kernel_factor = 1.2
@@ -77,20 +68,23 @@ class Diffusion1D(Application):
         # set initial concentration
         cmax = 1
         b = 0
-        sigma = 0.01
+        sigma = 0.1
         c = cmax*numpy.exp(-(x-b)**2/(2.*sigma**2))
 
         # def initial accelerations
         ac = numpy.zeros_like(x)
+        # copy initial condition
         co = numpy.copy(c)
         
         # const h and mass
         h = numpy.ones_like(x) * h0
         m = numpy.ones_like(x) * dx
 
+        # generate fluid particle array
         fluid = gpa(name='fluid', x=x, rho=rho, c=c, h=h, D=D, m=m, h0=h.copy(),
                      ac=ac, co=c)
 
+        # set output arrays
         fluid.add_output_arrays(['c'])
         
         print("1D Diffusion with %d particles"%(fluid.get_number_of_particles()))

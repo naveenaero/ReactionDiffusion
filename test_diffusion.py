@@ -23,6 +23,8 @@ dt = cfl*dx**2/D
 tf = 0.002
 nt = int(tf/dt)
 print 'number of iterations:', nt
+print 'dx:', dx
+print 'dt:', dt
 
 # kernel factor
 kernel_factor = 1.2
