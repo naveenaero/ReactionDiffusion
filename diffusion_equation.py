@@ -9,9 +9,9 @@ class DiffusionEquation(Equation):
         super(DiffusionEquation, self).__init__(dest, sources)
 
 
-    def initialise(self, d_idx, d_ac):
+    def initialize(self, d_idx, d_ac):
         d_ac[d_idx] = 0.0
-        print '1'
+        
         
     def loop(self, d_idx, s_idx, d_c, d_ac, s_c, s_m, d_rho, s_rho, d_D, s_D, XIJ, R2IJ, DWIJ, EPS):
         # compute average diffusion coefficient
